@@ -16,7 +16,3 @@ npm run server
 # Start client
 npm run client
 ```
-
-## License
-
-MIT © Mustafa Dokumacı
