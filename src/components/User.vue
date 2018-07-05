@@ -25,7 +25,12 @@
     created () {
       listener = client.on('connected', val => {
         if (val) {
-          this.user = 'user-a'
+          if (this.user === '') {
+            this.user = 'user-a'
+          } else {
+            // in case of reconnect
+            client.switchBranch(this.user)
+          }
         }
       })
     },
