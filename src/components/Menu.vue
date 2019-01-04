@@ -7,7 +7,6 @@
 </template>
 
 <script>
-  import client from '../client'
   let subscription, listener
 
   export default {
@@ -20,18 +19,18 @@
     },
     methods: {
       openPage (key) {
-        client.get('route').emit('update', key)
+        this.$client.get('route').set([ '@', 'content', key ])
         this.key = key
       }
     },
     created () {
-      subscription = client.get([ 'content', 'menu' ], {})
+      subscription = this.$client.get([ 'content', 'menu' ], {})
         .subscribe({ depth: 2 }, items => {
           this.items = items
             .map((item, key) => ({ key, title: item.get('title').compute() }))
         })
 
-      listener = client.on('routeUpdate', key => this.key = key)
+      listener = this.$client.on('routeUpdate', key => this.key = key)
     },
     destroyed: () => subscription.unsubscribe() || listener.off()
   }

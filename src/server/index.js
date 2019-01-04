@@ -5,43 +5,53 @@ const sMaster = create({
   content: {
     item1: {
       title: 'Item 1',
-      description: 'Description of Item 1'
+      description: 'Description of Item 1',
+      favourite: false
     },
     item2: {
       title: 'Item 2',
-      description: 'Description of Item 2'
+      description: 'Description of Item 2',
+      favourite: false
     },
     item3: {
       title: 'Item 3',
-      description: 'Description of Item 3'
+      description: 'Description of Item 3',
+      favourite: false
     },
     item4: {
       title: 'Item 4',
-      description: 'Description of Item 4'
+      description: 'Description of Item 4',
+      favourite: false
     },
     item5: {
       title: 'Item 5',
-      description: 'Description of Item 5'
+      description: 'Description of Item 5',
+      favourite: false
     },
     item6: {
       title: 'Item 6',
-      description: 'Description of Item 6'
+      description: 'Description of Item 6',
+      favourite: false
     },
     item7: {
       title: 'Item 7',
-      description: 'Description of Item 7'
+      description: 'Description of Item 7',
+      favourite: false
     },
     item8: {
       title: 'Item 8',
-      description: 'Description of Item 8'
+      description: 'Description of Item 8',
+      favourite: false
     },
     item9: {
       title: 'Item 9',
-      description: 'Description of Item 9'
+      description: 'Description of Item 9',
+      favourite: false
     },
     item10: {
       title: 'Item 10',
-      description: 'Description of Item 10'
+      description: 'Description of Item 10',
+      favourite: false
     },
     page1: {
       title: 'Page 1',
@@ -92,19 +102,16 @@ const sMaster = create({
   }
 })
 
-const updateRoute = (val, _, item) => {
-  item.set([ '@', 'content', val ])
-}
-
-const toggleFavourite = (val, _, item) => {
-  const favourite = item.get([ val, 'favourite'], false)
-  favourite.set(!favourite.compute())
-}
-
-sMaster.branch.branchListeners = branch => {
-  branch.get('route').on('update', updateRoute)
-  branch.get('content').on('toggleFavourite', toggleFavourite)
+sMaster.branch.newBranchMiddleware = newBranch => {
+  newBranch.branch.clientCanUpdate = [
+    {
+      path: [ 'route' ]
+    },
+    {
+      path: [ 'content', '*', 'favourite' ]
+    }
+  ]
 }
 
 const server = sMaster.listen(7071)
-server.switchBranch = (fromBranch, branchKey, switcher) => switcher(branchKey)
+server.switchBranch = (_, branchKey, switcher) => switcher(branchKey)

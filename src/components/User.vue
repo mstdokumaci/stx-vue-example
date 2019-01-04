@@ -7,7 +7,6 @@
 </template>
 
 <script>
-  import client from '../client'
   let listener
 
   export default {
@@ -19,17 +18,17 @@
     },
     watch: {
       user (val) {
-        client.switchBranch(val)
+        this.$client.switchBranch(val)
       }
     },
     created () {
-      listener = client.on('connected', val => {
+      listener = this.$client.on('connected', val => {
         if (val) {
           if (this.user === '') {
             this.user = 'user-a'
           } else {
             // in case of reconnect
-            client.switchBranch(this.user)
+            this.$client.switchBranch(this.user)
           }
         }
       })

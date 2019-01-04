@@ -8,7 +8,6 @@
 </template>
 
 <script>
-  import client from '../client'
   let subscription
 
   export default {
@@ -20,13 +19,14 @@
     },
     methods: {
       toggleFavourite (key) {
-        client.get('content').emit('toggleFavourite', key)
+        const favourite = this.$client.get([ 'content', key, 'favourite' ])
+        favourite.set(!favourite.compute())
       }
     },
     created () {
-      subscription = client.get('route', {}).subscribe(page => {
+      subscription = this.$client.get('route', {}).subscribe(page => {
         if (page.get('items')) {
-          client.emit('routeUpdate', page.serialize().pop())
+          this.$client.emit('routeUpdate', page.serialize().pop())
           this.items = page.get('items')
             .map((item, key) => ({
               key,
