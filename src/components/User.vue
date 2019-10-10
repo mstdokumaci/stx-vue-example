@@ -11,17 +11,17 @@
 
   export default {
     name: 'user',
-    data () {
+    data() {
       return {
         user: ''
       }
     },
     watch: {
-      user (val) {
+      user(val) {
         this.$client.switchBranch(val)
       }
     },
-    created () {
+    created() {
       listener = this.$client.on('connected', val => {
         if (val) {
           if (this.user === '') {
@@ -33,7 +33,10 @@
         }
       })
     },
-    destroyed: () => listener.off()
+    destroyed() {
+      listener && listener.off()
+      listener = null
+    }
   }
 </script>
 

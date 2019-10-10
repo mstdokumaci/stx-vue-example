@@ -12,18 +12,18 @@
 
   export default {
     name: 'page',
-    data () {
+    data() {
       return {
         items: []
       }
     },
     methods: {
-      toggleFavourite (key) {
-        const favourite = this.$client.get([ 'content', key, 'favourite' ])
+      toggleFavourite(key) {
+        const favourite = this.$client.get(['content', key, 'favourite'])
         favourite.set(!favourite.compute())
       }
     },
-    created () {
+    created() {
       subscription = this.$client.get('route', {}).subscribe(page => {
         if (page.get('items')) {
           this.$client.emit('routeUpdate', page.serialize().pop())
@@ -37,7 +37,10 @@
         }
       })
     },
-    destroyed: () => subscription.unsubscribe()
+    destroyed() {
+      subscription && subscription.unsubscribe()
+      subscription = null
+    }
   }
 </script>
 

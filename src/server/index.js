@@ -1,7 +1,7 @@
 const { create } = require('stx')
 
-const sMaster = create({
-  route: [ '@', 'content', 'page1' ],
+const master = create({
+  route: ['@', 'content', 'page1'],
   content: {
     item1: {
       title: 'Item 1',
@@ -56,62 +56,62 @@ const sMaster = create({
     page1: {
       title: 'Page 1',
       items: {
-        item1: [ '@', 'content', 'item1' ],
-        item2: [ '@', 'content', 'item2' ],
-        item6: [ '@', 'content', 'item6' ],
-        item8: [ '@', 'content', 'item8' ],
-        item10: [ '@', 'content', 'item10' ]
+        item1: ['@', 'content', 'item1'],
+        item2: ['@', 'content', 'item2'],
+        item6: ['@', 'content', 'item6'],
+        item8: ['@', 'content', 'item8'],
+        item10: ['@', 'content', 'item10']
       }
     },
     page2: {
       title: 'Page 2',
       items: {
-        item2: [ '@', 'content', 'item2' ],
-        item3: [ '@', 'content', 'item3' ],
-        item4: [ '@', 'content', 'item4' ],
-        item5: [ '@', 'content', 'item5' ],
-        item7: [ '@', 'content', 'item7' ]
+        item2: ['@', 'content', 'item2'],
+        item3: ['@', 'content', 'item3'],
+        item4: ['@', 'content', 'item4'],
+        item5: ['@', 'content', 'item5'],
+        item7: ['@', 'content', 'item7']
       }
     },
     page3: {
       title: 'Page 3',
       items: {
-        item1: [ '@', 'content', 'item1' ],
-        item5: [ '@', 'content', 'item5' ],
-        item6: [ '@', 'content', 'item6' ],
-        item9: [ '@', 'content', 'item9' ],
-        item10: [ '@', 'content', 'item10' ]
+        item1: ['@', 'content', 'item1'],
+        item5: ['@', 'content', 'item5'],
+        item6: ['@', 'content', 'item6'],
+        item9: ['@', 'content', 'item9'],
+        item10: ['@', 'content', 'item10']
       }
     },
     page4: {
       title: 'Page 4',
       items: {
-        item3: [ '@', 'content', 'item3' ],
-        item4: [ '@', 'content', 'item4' ],
-        item5: [ '@', 'content', 'item5' ],
-        item7: [ '@', 'content', 'item7' ],
-        item8: [ '@', 'content', 'item8' ]
+        item3: ['@', 'content', 'item3'],
+        item4: ['@', 'content', 'item4'],
+        item5: ['@', 'content', 'item5'],
+        item7: ['@', 'content', 'item7'],
+        item8: ['@', 'content', 'item8']
       }
     },
     menu: {
-      page1: [ '@', 'content', 'page1' ],
-      page2: [ '@', 'content', 'page2' ],
-      page3: [ '@', 'content', 'page3' ],
-      page4: [ '@', 'content', 'page4' ]
+      page1: ['@', 'content', 'page1'],
+      page2: ['@', 'content', 'page2'],
+      page3: ['@', 'content', 'page3'],
+      page4: ['@', 'content', 'page4']
     }
   }
 })
 
-sMaster.branch.newBranchMiddleware = newBranch => {
+master.branch.newBranchMiddleware = newBranch => {
   newBranch.branch.clientCanUpdate = [
     {
-      path: [ 'route' ]
+      path: ['route']
     },
     {
-      path: [ 'content', '*', 'favourite' ]
+      path: ['content', '*', 'favourite']
     }
   ]
 }
 
-const server = sMaster.listen(7071)
-server.switchBranch = (_, branchKey, switcher) => switcher(branchKey)
+const server = master.listen(7071)
+server.switchBranch = async (_, branchKey, switcher) => switcher(branchKey)

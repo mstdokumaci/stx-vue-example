@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import App from './App.vue'
+
+import App from './App'
 import client from './client'
 
 Vue.config.productionTip = false
@@ -15,4 +16,6 @@ Object.defineProperty(
 
 const app = new Vue({
   render: h => h(App)
-}).$mount('#app')
+})
+
+app.$mount('#app')
